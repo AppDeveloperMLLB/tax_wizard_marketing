@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/link.dart';
 
 class MarketingPage extends StatelessWidget {
   const MarketingPage({super.key});
@@ -56,24 +56,31 @@ class _Header extends StatelessWidget {
               ).textTheme.headlineMedium?.copyWith(color: Colors.white),
             ),
             const SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () {
-                // TODO: Add app store link
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 40,
-                  vertical: 20,
-                ),
+            Link(
+              uri: Uri.parse(
+                "https://apps.apple.com/us/app/taxwizard/id6742277281",
               ),
-              child: Text(
-                'アプリをダウンロード',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontSize: 18,
-                ),
-              ),
+              target: LinkTarget.blank,
+              builder:
+                  (context, followLink) => ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 40,
+                        vertical: 20,
+                      ),
+                    ),
+                    //tooltip: 'Twitterを開く',
+                    onPressed: followLink,
+                    child: Text(
+                      'アプリをダウンロード',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: 18,
+                      ),
+                    ),
+                    //icon: const Icon(SimpleIcons.twitter),
+                  ),
             ),
           ],
         ),
@@ -96,19 +103,14 @@ class _Features extends StatelessWidget {
             runSpacing: 40,
             children: [
               _FeatureCard(
-                icon: Icons.receipt_long,
-                title: '領収書スキャン',
-                description: 'AIが自動で領収書を読み取り、データ化します',
-              ),
-              _FeatureCard(
                 icon: Icons.calculate,
-                title: '自動計算',
-                description: '入力されたデータから自動で確定申告額を計算',
+                title: '帳簿出力',
+                description: '入力したデータから帳簿を出力',
               ),
               _FeatureCard(
                 icon: Icons.cloud_upload,
-                title: 'クラウド保存',
-                description: 'データを安全にクラウドに保存',
+                title: 'データ保存',
+                description: 'データをアプリに保存',
               ),
             ],
           ),
@@ -195,18 +197,27 @@ class _CallToAction extends StatelessWidget {
         children: [
           Text('今すぐ始めましょう', style: Theme.of(context).textTheme.headlineLarge),
           const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              // TODO: Add app store link
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+          Link(
+            uri: Uri.parse(
+              "https://apps.apple.com/us/app/taxwizard/id6742277281",
             ),
-            child: const Text(
-              'アプリをダウンロード',
-              style: TextStyle(color: Colors.white, fontSize: 18),
-            ),
+            target: LinkTarget.blank,
+            builder:
+                (context, followLink) => ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 40,
+                      vertical: 20,
+                    ),
+                  ),
+                  onPressed: followLink,
+                  child: const Text(
+                    'アプリをダウンロード',
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                  //icon: const Icon(SimpleIcons.twitter),
+                ),
           ),
         ],
       ),
@@ -218,6 +229,7 @@ class _Footer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       color: Colors.grey[900],
       padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
       child: Column(
